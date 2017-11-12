@@ -1,0 +1,6 @@
+logging:
+  level:
+    org.springframework.web: DEBUG
+    com.example: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"

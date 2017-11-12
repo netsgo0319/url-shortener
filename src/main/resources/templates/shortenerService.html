@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8"/>
+  <title>URL Shortener</title>
+  <script src="/webjars/jquery/2.2.1/jquery.min.js"/>
+</head>
+<body>
+    <div>
+      <label for="longUrl">URL to shorten : </label>
+      <input id="longUrl"/>
+      <button id="shortenButton">SHORTEN!</button>
+    </div>
+    <hr/>
+    <div id="shortenedArea">
+      <label for="shortUrl">Shortened URL : </label>
+      <h3>
+        <a id="shortUrl"></a>
+      </h3>
+    </div>
+    <div th:if="${errorMessage != null}">
+      <span th:text="${errorMessage}"></span>
+    </div>
+</body>
+<script>
+  $(document).ready(function() {
+    $("#shortenButton").click(function(){
+      const longUrl = $("#longUrl").val();
+      console.log(longUrl);
+      $.ajax({
+        'type': 'POST',
+        'url': 'shorten',
+        'contentType' : 'application/json; charset=utf-8',
+        'data': JSON.stringify({ longUrl : longUrl }),
+        'dataType': 'text'
+      }).done(function(data){
+        console.log(data);
+        $("#shortUrl").text(data).attr("href", data);
+      }).fail(function(error) {
+        alert("Error occurred while shortening ! " + error)
+      });
+    })
+  });
+</script>
+</html>

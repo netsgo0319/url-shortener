@@ -45,8 +45,8 @@ public class ShortenerHashService implements ShortenerService {
                 return "Cannot shorten because of unknown error.";
             }
             byte[] encodedhash = digest.digest(changingUrl.getBytes(StandardCharsets.UTF_8));
-            log.debug("Encoded : " + Base64.getUrlEncoder().encodeToString(encodedhash));
-            String shortUrl = Base64.getUrlEncoder().encodeToString(encodedhash).substring(0, 9);
+            log.debug("Encoded : " + Base64.getUrlEncoder().withoutPadding().encodeToString(encodedhash));
+            String shortUrl = Base64.getUrlEncoder().withoutPadding().encodeToString(encodedhash).substring(0, 8);
             if (shortenerRepository.getIfPresentFromShort(shortUrl).isPresent()) {
                 return shorten(originalUrl, changingUrl + retry, retry - 1);
             }

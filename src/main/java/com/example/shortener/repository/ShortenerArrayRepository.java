@@ -31,7 +31,7 @@ public class ShortenerArrayRepository {
             throw new IllegalArgumentException("Cannot add [" + shortUrl + "] in " + index + " of array. Already occupied.");
         }
         LONG_SHORT_MAP.put(longUrl, shortUrl);
-        LONG_URL_LIST.add(index, shortUrl);
+        LONG_URL_LIST.add(index, longUrl);
         return shortUrl;
     }
 }

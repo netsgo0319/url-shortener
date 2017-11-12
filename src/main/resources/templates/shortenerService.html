@@ -9,6 +9,16 @@
     <div>
       <label for="longUrl">URL to shorten : </label>
       <input id="longUrl"/>
+    </div>
+    <div>
+      <label for="shortenerType">Shortener Type : </label>
+      <select id="shortenerType">
+        <option value="MAP">MAP</option>
+        <option value="ARRAY">ARRAY</option>
+        <option value="HASH">HASH</option>
+      </select>
+    </div>
+    <div>
       <button id="shortenButton">SHORTEN!</button>
     </div>
     <hr/>
@@ -18,26 +28,26 @@
         <a id="shortUrl"></a>
       </h3>
     </div>
-    <div th:if="${errorMessage != null}">
-      <span th:text="${errorMessage}"></span>
+    <div th:if="${errorMessage != null}" style="color: red">
+      <h1><span th:text="${errorMessage}"></span></h1>
     </div>
 </body>
 <script>
   $(document).ready(function() {
     $("#shortenButton").click(function(){
       const longUrl = $("#longUrl").val();
-      console.log(longUrl);
+      const type = $("#shortenerType").val();
       $.ajax({
         'type': 'POST',
-        'url': 'shorten',
+        'url': type + '/shorten/',
         'contentType' : 'application/json; charset=utf-8',
         'data': JSON.stringify({ longUrl : longUrl }),
         'dataType': 'text'
       }).done(function(data){
         console.log(data);
         $("#shortUrl").text(data).attr("href", data);
-      }).fail(function(error) {
-        alert("Error occurred while shortening ! " + error)
+      }).fail(function(request){
+        alert("Error Occurred! \n"+ JSON.parse(request.responseText).message);
       });
     })
   });

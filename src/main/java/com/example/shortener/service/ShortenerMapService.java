@@ -22,11 +22,15 @@ public class ShortenerMapService implements ShortenerService {
 
     public String shorten(String url) {
         return shortenerRepository.getIfPresentFromLong(url)
-                                  .orElseGet(() -> createShortUrlKey(shortenerRepository.getSeed()));
+                                  .orElseGet(() -> {
+                                      String shortUrlKey = createShortUrlKey(shortenerRepository.getSeed());
+                                      shortenerRepository.put(url, shortUrlKey);
+                                      return shortUrlKey;
+                                  });
     }
 
     private String createShortUrlKey(long currentIndexSeed) {
-        return Base64.getUrlEncoder().encodeToString(String.valueOf(currentIndexSeed).getBytes());
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(String.valueOf(currentIndexSeed).getBytes());
     }
 
     public String tryFindLongUrl(String shortUrlKey) {

@@ -35,7 +35,7 @@ public class ShortenerCompositeService {
         if (StringUtils.isEmpty(url)) {
             throw new IllegalArgumentException("Cannot shorten empty url");
         }
-        return MY_HOST + SHORTENER_SERVICE_MAP.get(type).shorten(convertToKeyUrl(url));
+        return MY_HOST + type + '/' + SHORTENER_SERVICE_MAP.get(type).shorten(convertToKeyUrl(url));
     }
 
     private String convertToKeyUrl(String originalUrl) {

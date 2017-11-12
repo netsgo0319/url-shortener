@@ -33,7 +33,7 @@ public class ShortenerController {
     @RequestMapping(value = "/{type}/shorten", method= RequestMethod.POST)
     @ResponseBody
     public String shortenMap(@PathVariable("type") ShortenerType type, @RequestBody JsonNode node) {
-        String urlString = node.get("longUrl").asText();
+        String urlString = node.get("longUrl").asText().trim();
         return shortenerService.shorten(type, urlString);
     }
 

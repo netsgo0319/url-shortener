@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ShortenerRepository {
+public class ShortenerMapRepository {
     private static final Map<String, String> LONG_SHORT_MAP = new ConcurrentHashMap<>();
     private static final Map<String, String> SHORT_LONG_MAP = new ConcurrentHashMap<>();
     private static final AtomicLong ATOMIC_LONG = new AtomicLong(0);
